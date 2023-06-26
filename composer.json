@@ -27,7 +27,9 @@
         "leafs/logger": "*",
         "leafs/cors": "*",
         "leafs/auth": "*",
-        "leafs/db": "*"
+        "leafs/db": "*",
+        "rmccue/requests": "^2.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.16"

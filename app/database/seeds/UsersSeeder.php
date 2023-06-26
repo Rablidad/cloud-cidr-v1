@@ -3,7 +3,7 @@ namespace App\Database\Seeds;
 
 use App\Database\Factories\UserFactory;
 use Illuminate\Database\Seeder;
-use App\Models\User;
+use App\Models\Aws;
 
 class UsersSeeder extends Seeder
 {
@@ -15,7 +15,7 @@ class UsersSeeder extends Seeder
     public function run()
     {
         // You can directly create db records
-        // $user = new User();
+        // $user = new Aws();
         // $user->fullname = 'Mychi';
         // $user->email = "mickdd22@gmail.com";
         // $user->password = md5("password.demo");

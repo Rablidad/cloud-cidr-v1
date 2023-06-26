@@ -8,9 +8,9 @@
 | Create a handler for 404 errors
 |
 */
-// app()->set404(function() {
-// 	response()->page(ViewsPath("errors/404.html", false), 404);
-// });
+app()->set404(function () {
+    response()->page(ViewsPath("errors/404.html", false), 404);
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -20,9 +20,9 @@
 | Create a handler for error 500
 |
 */
-// app()->setErrorHandler(function() {
-// 	response()->page(ViewsPath("errors/500.html", false), 500);
-// });
+app()->setErrorHandler(function () {
+    response()->page(ViewsPath("errors/500.html", false), 500);
+});
 
 /*
 |--------------------------------------------------------------------------

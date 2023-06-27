@@ -1,0 +1,33 @@
+{
+    "name": "leafs/aloe",
+    "version": "1.3.0",
+    "description": "Overpowered command line tool for your leaf apps.",
+    "keywords": ["cli", "console", "cmd", "bash", "leaf", "php"],
+    "homepage": "https://leafphp.dev/aloe-cli/",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Michael Darko",
+            "email": "mickdd22@gmail.com",
+            "homepage": "https://mychi.netlify.app",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Aloe\\": "src"
+        }
+    },
+    "minimum-stability": "dev",
+	"prefer-stable": true,
+    "require": {
+        "psy/psysh": "^0.10.9",
+        "symfony/console": "^5.3",
+        "illuminate/support": "^8.73",
+        "leafs/fs": "^1.0"
+    },
+    "require-dev": {
+        "leafs/leaf": "v3.0-rc"
+    }
+}

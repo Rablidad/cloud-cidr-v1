@@ -9,7 +9,7 @@
 | resolve app paths.
 |
 */
-chdir(dirname(__DIR__));
+chdir(__DIR__);
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +22,7 @@ chdir(dirname(__DIR__));
 | loading of any our classes "manually". Feels great to relax.
 |
 */
-require dirname(__DIR__) . '/vendor/autoload.php';
+require __DIR__ . '/vendor/autoload.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -33,7 +33,7 @@ require dirname(__DIR__) . '/vendor/autoload.php';
 |
 */
 try {
-    \Dotenv\Dotenv::createUnsafeImmutable(dirname(__DIR__))->load();
+    \Dotenv\Dotenv::createUnsafeImmutable(__DIR__)->load();
 } catch (\Throwable $th) {
     trigger_error($th);
 }
@@ -132,7 +132,7 @@ app()->cors(CorsConfig());
 | Require app routes.
 |
 */
-require dirname(__DIR__) . '/app/routes/index.php';
+require __DIR__ . '/app/routes/index.php';
 
 /*
 |--------------------------------------------------------------------------

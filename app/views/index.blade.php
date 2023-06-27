@@ -7,28 +7,28 @@
     <title>AWS - IP RANGES</title>
     <link rel="shortcut icon" href="https://leafphp.dev/logo-circle.png" type="image/x-icon">
     <link rel="stylesheet" href="{{ PublicPath('assets/css/styles.css') }}">
-    <link rel="stylesheet"
-          href="https://fonts.googleapis.com/css?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400;1,500;1,700;display=swap">
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../public/assets/js/jquery_min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <script>
 
-    function find_prefix(element)
-    {
-        // const id = $(String.raw`#15.230.64.64/26`);
-        // if (!id.hasClass('active-prefix'))
-        //     id.addClass('active-prefix');
-        // $('html, body').animate({
-        //     scrollTop: id.offset().top
-        // }, 1000)
-        // setTimeout(() => { id.removeClass('active-prefix') }, 3000);
+    function find_prefix(element) {
+        // get prefix string from input
+        const prefix = 'prefix-' + ''.replace(/\.|:|\//gi, '-');
+        const id = $('#' + prefix);
+        id.addClass('active-prefix');
+        $('html, body').animate({
+            scrollTop: id.offset().top
+        }, 1000)
+        setTimeout(() => {
+            id.removeClass('active-prefix')
+        }, 5000);
     }
 
-    function show_snack_bar(text)
-    {
+    function show_snack_bar(text) {
         const snackbar = $('#snackbar');
         if (!snackbar.hasClass('show')) {
             snackbar.addClass('show');
@@ -39,8 +39,7 @@
         }
     }
 
-    function copy_prefix(element)
-    {
+    function copy_prefix(element) {
         const prefix = $(element).text();
         show_snack_bar("Copied to the clipboard");
         console.log("Copied to the clipboard: " + prefix);
@@ -122,7 +121,8 @@
                     <td>{{$content[0]['location']}}</td>
                     <td class="prefixes-column">
                         @foreach ($content as $prefix)
-                            <p onclick="copy_prefix(this)" id="{{$prefix['prefix']}}">{{$prefix['prefix']}}</p>
+                            <p onclick="copy_prefix(this)"
+                               id="prefix-{{str_replace(array('.', ':', '/'), '-', $prefix['prefix'])}}">{{$prefix['prefix']}}</p>
                         @endforeach
                     </td>
                 </tr>

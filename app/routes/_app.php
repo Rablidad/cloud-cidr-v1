@@ -3,7 +3,7 @@
 use App\Controllers\AwsController;
 
 app()->get('/', function () {
-    echo "<p>Click to go &#8594; <a href='/aws?protocol=ipv4'>/aws</a></p>";
+    header('Location: /aws');
 });
 
 app()->get('/aws', function () {

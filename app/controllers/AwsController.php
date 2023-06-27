@@ -22,9 +22,9 @@ class AwsController extends \Leaf\Controller
      */
     private $zones_map = [
         "global" => "Global",
-        "us-east-2" => "City of Dublin (Ohio)",
-        "us-east-1" => "N. Virginia",
-        "us-west-1" => "San Francisco",
+        "us-east-2" => "Ohio",
+        "us-east-1" => "North of Virginia",
+        "us-west-1" => "North of California",
         "us-west-2" => "Oregon",
         "af-south-1" => "Cape Town",
         "ap-east-1" => "Hong Kong",
@@ -52,7 +52,7 @@ class AwsController extends \Leaf\Controller
         "eu-north-1" => "Stockholm",
         "eu-central-2" => "Zurich",
         "me-west-1" => "Tel Aviv",
-        "me-south-1" => "Manama (Bahrain)",
+        "me-south-1" => "Bahrain",
         "me-central-1" => "United Arab Emirates",
         "sa-east-1" => "São Paulo",
         "il-central-1" => "Tel Aviv",
@@ -63,21 +63,35 @@ class AwsController extends \Leaf\Controller
     /**
      * Fetch the ip ranges from aws endpoint
      */
-    public function get()
+    public function fetch_json()
     {
         return Requests::get($this->endpoint);
+    }
+
+    /*
+     * Get zone information
+     * */
+    public function get_zones_info($zones)
+    {
+        return array_map(function ($key) {
+            return [
+                "id" => strtolower($key),
+                "location" => $this->get_zone_name($key)
+            ];
+        }, $zones);
     }
 
     /**
      * Sort aws json prefixes
      */
-    public function aws_sort($data, $query)
+    public function aws_sort($data, $query, $sort=false)
     {
-        $prefixes = $data[$query['prefix']['collection']];
+        $prefixes = $data[$query['prefix']['group']];
         $prefixes = $this->filter_prefixes_by_service($prefixes, $query['service']);
-        $regions = $this->group_prefixes_into_regions($prefixes, $query['prefix']['key']);
+        $regions = $this->group_prefixes_into_regions($prefixes, $query['prefix']['item']);
         $this->sort_prefixes_ascending_and_remove_duplicates($regions);
-//        ksort($regions);
+        if ($sort)
+            ksort($regions);
         return $regions;
     }
 

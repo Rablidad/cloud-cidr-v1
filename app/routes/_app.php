@@ -7,13 +7,13 @@ app()->get('/', function () {
 });
 
 app()->get('/aws', function () {
-    $awsController = new AwsController();
     // capture url query parameters
     $protocol = request()->get("protocol");
     $service = request()->get("service");
     $region = request()->get("region");
 
-    $response = $awsController->get();
+    $awsController = new AwsController();
+    $response = $awsController->fetch_json();
 
     if ($response->status_code === 200) {
         $data = json_decode($response->body, true);
@@ -24,8 +24,8 @@ app()->get('/aws', function () {
                     "region" => $region,
                     "service" => $service,
                     "prefix" => array(
-                        "collection" => "prefixes",
-                        "key" => "ip_prefix"
+                        "group" => "prefixes",
+                        "item" => "ip_prefix"
                     )
                 ]);
             } else if ($protocol === "ipv6") {
@@ -34,8 +34,8 @@ app()->get('/aws', function () {
                     "region" => $region,
                     "service" => $service,
                     "prefix" => array(
-                        "collection" => "ipv6_prefixes",
-                        "key" => "ipv6_prefix"
+                        "group" => "ipv6_prefixes",
+                        "item" => "ipv6_prefix"
                     )
                 ]);
             } else {
@@ -44,18 +44,17 @@ app()->get('/aws', function () {
                     "region" => $region,
                     "service" => $service,
                     "prefix" => array(
-                        "collection" => "prefixes",
-                        "key" => "ip_prefix"
+                        "group" => "prefixes",
+                        "item" => "ip_prefix"
                     )
                 ]);
-
                 $ipv6_regions = $awsController->aws_sort($data, [
                     "protocol" => $protocol,
                     "region" => $region,
                     "service" => $service,
                     "prefix" => array(
-                        "collection" => "ipv6_prefixes",
-                        "key" => "ipv6_prefix"
+                        "group" => "ipv6_prefixes",
+                        "item" => "ipv6_prefix"
                     )
                 ]);
 
@@ -63,13 +62,8 @@ app()->get('/aws', function () {
             }
 
             ksort($regions);
-            $zone_names = array_map(function ($key) use($awsController) {
-                return [
-                    "id" => strtolower($key),
-                    "location" => $awsController->get_zone_name($key)
-                ];
-            }, array_keys($regions));
-            echo view("index", ["ipranges" => $regions, "zones" => $zone_names]);
+            $zones = $awsController->get_zones_info(array_keys($regions));
+            echo view("index", ["ipranges" => $regions, "zones" => $zones]);
         }
     }
 });
